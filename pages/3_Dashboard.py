@@ -19,13 +19,14 @@ if uploaded_file:
 
     if "Prix" in df.columns:
         try:
-            df['Prix'] = df['Prix'].replace('[^\d.]', '', regex=True).astype(float)
+            df['Prix'] = df['Prix'].replace(r'[^\d.]', '', regex=True).astype(float)
             st.subheader("💰 Prix moyen")
             st.write(f"{df['Prix'].mean():,.0f} FCFA")
             st.subheader("📈 Distribution des prix")
             st.bar_chart(df['Prix'])
         except Exception:
             st.warning("⚠️ Impossible de traiter la colonne Prix.")
+
 
     if "Année" in df.columns:
         st.subheader("📊 Répartition par année")
