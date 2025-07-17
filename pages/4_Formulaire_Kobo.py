@@ -5,7 +5,7 @@ st.write("Merci de prendre quelques minutes pour nous aider à améliorer cette 
 
 st.components.v1.iframe(
     #"https://ee.kobotoolbox.org/i/ofN781in",
-    "https://kf.kobotoolbox.org/#/forms/aSAf5WziC2MaeqmYpayUMh",
+    "https://ee.kobotoolbox.org/i/ofN781in",
     width=800,
     height=600
 )
