@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+
+st.title("Télécharger des données déjà scrapées à travers Web Scraper ")
+
 def load_(dataframe, title, key) :
     st.markdown("""
     <style>
