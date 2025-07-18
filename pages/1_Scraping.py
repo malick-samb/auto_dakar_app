@@ -2,9 +2,9 @@ import streamlit as st
 import pandas as pd
 from auto_dakar import scrape_auto
 
-st.title("🕸️ Scraping en direct - Auto Dakar")
+st.title("Scraping en direct - Auto Dakar")
 
-st.sidebar.header("⚙️ Paramètres")
+st.sidebar.header("Paramètres")
 nb_pages = st.sidebar.slider("Nombre de pages :", 1, 50, 5)
 
 category_choice = st.sidebar.radio(
