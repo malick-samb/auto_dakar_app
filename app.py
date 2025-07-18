@@ -3,10 +3,9 @@ import streamlit as st
 st.set_page_config(
     page_title="Auto Dakar Scraper",
     layout="wide",
-    page_icon="🚗"
 )
 
-st.title("🚗 Auto Dakar - Accueil")
+st.title("Auto Dakar - Accueil")
 st.write("""
 Bienvenue dans l'application Auto Dakar !
 
@@ -16,5 +15,5 @@ Utilisez le menu à gauche pour :
 - Explorer les données avec le Dashboard
 - Remplir le formulaire d'évaluation
 
-✅ Sélectionnez une page dans la sidebar pour commencer.
+Sélectionnez une page dans la sidebar pour commencer.
 """)
