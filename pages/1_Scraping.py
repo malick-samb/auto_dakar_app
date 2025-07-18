@@ -20,16 +20,16 @@ category_map = {
 
 selected_category = category_map[category_choice]
 
-if st.sidebar.button("🚀 Lancer le Scraping"):
+if st.sidebar.button("Lancer le Scraping"):
     with st.spinner(f"Scraping '{category_choice}' sur {nb_pages} page(s)..."):
         df = scrape_auto(selected_category, nb_pages)
         if df.empty:
-            st.error("❌ Aucun résultat trouvé. Vérifiez la catégorie ou le nombre de pages.")
+            st.error("Aucun résultat trouvé. Vérifiez la catégorie ou le nombre de pages.")
         else:
-            st.success(f"✅ Scraping terminé ({len(df)} résultats)")
+            st.success(f"Scraping terminé ({len(df)} résultats)")
             st.dataframe(df)
             st.download_button(
-                label="⬇️ Télécharger le CSV",
+                label="Télécharger le CSV",
                 data=df.to_csv(index=False).encode('utf-8'),
                 file_name=f"{selected_category}_scraped.csv",
                 mime='text/csv'
