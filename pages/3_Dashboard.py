@@ -1,37 +1,46 @@
 import streamlit as st
 import pandas as pd
+from visualisation import Visualisation, traitement_de_donnees
 
-st.title("📊 Dashboard des Annonces")
+st.title("Dashboard des Annonces")
+source = st.selectbox("Choisir une source", ["Voitures", "Motos", "Locations"])
 
-st.write("Chargez un fichier CSV nettoyé (scrapé via WebScraper) pour explorer les données.")
+if source == "Voitures":
+    df = pd.read_csv('data/vente_auto.csv')
+    df = traitement_de_donnees(df)
+    df = pd.DataFrame(df)[[
+        'marque', 'année', 'prix', 'adresse', 'kilométrage', 'boite', 'carburant', 'propriétaire'
+    ]]
+elif source == "Motos":
+    df = pd.read_csv('data/vente_moto.csv')
+    df = traitement_de_donnees(df)
+    df = pd.DataFrame(df)[[
+        'marque', 'année', 'prix', 'adresse', 'kilométrage', 'propriétaire'
+    ]]
+elif source == "Locations":
+    df = pd.read_csv('data/location_auto.csv')
+    df = traitement_de_donnees(df)
+    df = pd.DataFrame(df)[[
+        'marque', 'année', 'prix', 'adresse', 'propriétaire'
+    ]]
+else:
+    st.warning("Aucune donnée disponible.")
+    st.stop()
 
-uploaded_file = st.file_uploader("📂 Uploader votre fichier CSV", type=["csv"])
+vis = Visualisation(df)
 
-if uploaded_file:
-    df = pd.read_csv(uploaded_file)
-    st.success("✅ Données chargées avec succès !")
+st.subheader("Aperçu des données")
+st.dataframe(vis.get_dataframe())
 
-    st.subheader("🔎 Aperçu des données")
-    st.dataframe(df.head())
+st.subheader("Prix moyen par marque")
+st.bar_chart(vis.prix_moyen_par_marque())
 
-    st.subheader("📌 Nombre total d'annonces")
-    st.write(df.shape[0])
+st.subheader("Répartition des années")
+st.line_chart(vis.repartition_annees())
 
-    if "Prix" in df.columns:
-        try:
-            df['Prix'] = df['Prix'].replace(r'[^\d.]', '', regex=True).astype(float)
-            st.subheader("💰 Prix moyen")
-            st.write(f"{df['Prix'].mean():,.0f} FCFA")
-            st.subheader("📈 Distribution des prix")
-            st.bar_chart(df['Prix'])
-        except Exception:
-            st.warning("⚠️ Impossible de traiter la colonne Prix.")
-
-
-    if "Année" in df.columns:
-        st.subheader("📊 Répartition par année")
-        st.bar_chart(df['Année'].value_counts().sort_index())
-
-    if "Carburant" in df.columns:
-        st.subheader("⛽ Répartition par type de carburant")
-        st.bar_chart(df['Carburant'].value_counts())
+fig = vis.plot_distribution_kilometrage()
+if fig is not None:
+    st.subheader("Distribution du kilométrage")
+    st.pyplot(fig)
+else:
+    st.warning("Aucune donnée de kilométrage disponible.")
